@@ -25,7 +25,6 @@ public class BankAccountService {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter accountId to complete the transaction: ");
         transaction.setAccountId(scanner.nextInt());
-
         return transaction;
     }
 

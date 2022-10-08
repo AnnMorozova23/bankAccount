@@ -4,10 +4,7 @@ import com.it_academy.model.Account;
 import com.it_academy.model.Transaction;
 import com.it_academy.model.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import static java.lang.String.format;
 
@@ -20,14 +17,23 @@ public class UserQueryExecutor {
         Statement statement = connection.createStatement();
         statement.executeUpdate(format("INSERT INTO users (name, address) VALUES('%s', '%s')",
                 user.getName(), user.getAddress()));
+
+        ResultSet resultSet = statement.executeQuery("SELECT MAX(userId) FROM users");
+        System.out.println("\n" + "Your ID is: " + resultSet.getInt(1));
         statement.close();
+        resultSet.close();
+
     }
 
     public static void addAccount(Connection connection, Account account) throws SQLException {
         Statement statement = connection.createStatement();
         statement.executeUpdate(format("INSERT INTO accounts (userId, balance, currency) VALUES('%d', '%d', '%s' )",
                 account.getUserId(), account.getBalance(), account.getCurrency()));
+
+        ResultSet resultSet = statement.executeQuery("SELECT MAX(accountId) FROM accounts");
+        System.out.println("\n" + "Your Account ID is: " + resultSet.getInt(1));
         statement.close();
+        resultSet.close();
     }
 
     public static void createTransaction(Connection connection,
@@ -37,6 +43,7 @@ public class UserQueryExecutor {
                 transaction.getAccountId(), amountForRefill));
         statement.close();
     }
+
 
     public static void createTransactionForDebit(Connection connection,
                                                  Transaction transaction, int amountForDebit) throws SQLException {

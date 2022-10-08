@@ -2,6 +2,7 @@ package com.it_academy.demo;
 
 import com.it_academy.model.Account;
 import com.it_academy.model.Transaction;
+import com.it_academy.model.User;
 import com.it_academy.service.BankAccountService;
 
 import java.sql.Connection;
@@ -26,8 +27,9 @@ public class BankAppDb {
                 action = new Scanner(System.in).nextLine();
                 switch (action) {
                     case "1":
-                        addUser(connection, BankAccountService.inputUser());
-                        System.out.println("Operation is successful\n" + "Please, choose the operation\n");
+                        User user  = BankAccountService.inputUser();
+                        addUser(connection, user);
+                        System.out.println("Operation is successful\n" + "Please, choose another operation\n");
                         break;
                     case "2":
                         Account account = BankAccountService.inputAccount();
@@ -35,7 +37,7 @@ public class BankAppDb {
                             System.out.println("You already have account in this currency");
                         } else if (checkUserIdIsExist(connection, account)) {
                             addAccount(connection, account);
-                            System.out.println("Operation is successful\n" + "Please, choose the operation\n");
+                            System.out.println("Operation is successful\n" + "Please, choose another operation\n");
                         } else {
                             System.out.println("User does not exist!");
                         }
@@ -50,7 +52,7 @@ public class BankAppDb {
                         } else if (checkAccountIdIsExist(connection, transaction)) {
                             createTransaction(connection, transaction, amountForRefill);
                             refillAccount(connection, transaction, amountForRefill);
-                            System.out.println("Operation is successful\n" + "Please, choose the operation\n");
+                            System.out.println("Operation is successful\n" + "Please, choose another operation\n");
                         } else {
                             System.out.println("Account does not exist!");
                         }
@@ -65,7 +67,7 @@ public class BankAppDb {
                         } else if (checkAccountIdIsExist(connection, transactionForDebit)) {
                             createTransactionForDebit(connection, transactionForDebit, amountForDebit);
                             debitAccount(connection, transactionForDebit, amountForDebit);
-                            System.out.println("Operation is successful\n" + "Please, choose the operation\n");
+                            System.out.println("Operation is successful\n" + "Please, choose another operation\n");
                         } else {
                             System.out.println("Account does not exist!");
                         }
